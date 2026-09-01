@@ -6,6 +6,16 @@ const eventEmitter = new EventEmitter();
 // global variables
 let task= [];
 
+setInterval(() => {
+  const m = process.memoryUsage();
+  console.log({
+    rss: (m.rss / 1024 / 1024).toFixed(1) + 'MB',        // total OS memory
+    heapUsed: (m.heapUsed / 1024 / 1024).toFixed(1) + 'MB',
+    heapTotal: (m.heapTotal / 1024 / 1024).toFixed(1) + 'MB',
+    external: (m.external / 1024 / 1024).toFixed(1) + 'MB', // Buffers, native bindings
+  });
+}, 10_000);
+
 app.get('/', (req, res, next) => {
     // closure with an external variable reference
     task.push(function() {
