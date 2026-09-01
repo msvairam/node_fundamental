@@ -1,31 +1,31 @@
-import { iPaymentStrategy } from './payment-strategy.interface';
+import { PaymentStrategy } from './payment-strategy.abstract';
 import { Amount, PayDetails, PayResponse } from './types';
 
-export class StripePayment implements iPaymentStrategy {
+export class StripePayment extends PaymentStrategy {
     pay(amount: Amount, details: PayDetails): Promise<PayResponse> {
         return Promise.resolve({ status: 'success', gateway: 'stripe' });
     }
 }
 
-export class PaypalPayment implements iPaymentStrategy {
+export class PaypalPayment extends PaymentStrategy {
     pay(amount: Amount, details: PayDetails): Promise<PayResponse> {
         return Promise.resolve({ status: 'success', gateway: 'paypal' });
     }
 }
 
-export class RazorpayPayment implements iPaymentStrategy {
+export class RazorpayPayment extends PaymentStrategy {
     pay(amount: Amount, details: PayDetails): Promise<PayResponse> {
         return Promise.resolve({ status: 'success', gateway: 'razorpay' });
     }
 }
 
 export class PaymentProcess {
-    _strategy !: iPaymentStrategy;
-    constructor(strategy: iPaymentStrategy) {
+    _strategy !: PaymentStrategy;
+    constructor(strategy: PaymentStrategy) {
         this._strategy = strategy;
     }
 
-    setStrategy(strategy: iPaymentStrategy) {
+    setStrategy(strategy: PaymentStrategy) {
         this._strategy = strategy;
     }
 
